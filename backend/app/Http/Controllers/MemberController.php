@@ -7,6 +7,7 @@ use App\Models\School;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
 class MemberController extends Controller
 {
@@ -61,7 +62,9 @@ class MemberController extends Controller
      */
     public function edit(Member $member)
     {
-        return view('members.edit', compact('member'));
+        $schools = School::all();
+
+        return view('members.edit', compact('member', 'schools'));
     }
 
     /**
@@ -69,7 +72,7 @@ class MemberController extends Controller
      */
     public function update(Request $request, Member $member)
     {
-        $validator = $this->validator($request->all());
+        $validator = $this->validator($request->all(), $member);
 
         if ($validator->fails()) {
             return redirect(route('members.edit', $member->id))
@@ -95,12 +98,22 @@ class MemberController extends Controller
     /**
      * Validate the request data.
      */
-    protected function validator(array $data)
+    protected function validator(array $data, $member = null)
     {
-        return Validator::make($data, [
+        $rules = [
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:members'],
-            'school_id' => ['required', 'exists:schools,id'], 
-        ]);
+            'email' => ['required', 'string', 'email', 'max:255'],
+            'school_id' => ['required', 'exists:schools,id'],
+        ];
+    
+        // If $member is provided (for update), add unique rule
+        if ($member) {
+            $rules['email'][] = Rule::unique('members')->ignore($member->id);
+        } else {
+            // For create, apply normal unique rule
+            $rules['email'][] = 'unique:members';
+        }
+    
+        return Validator::make($data, $rules);
     }
 }
