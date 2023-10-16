@@ -18,6 +18,9 @@
                             <tr>
                                 <td>{{ $member->name }}</td>
                                 <td>{{ $member->email }}</td>
+                                <td>
+                                    <a href="{{ route('members.show', $member->id) }}" class="btn btn-sm btn-info">View</a>
+                                </td>
                             </tr>
                         @empty
                             <tr>

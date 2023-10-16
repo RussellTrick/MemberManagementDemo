@@ -3,6 +3,8 @@
 @section('content')
     <h1>Create Member</h1>
 
+    <a href="{{ url('/members') }}">Back</a>
+
     <form action="{{ url('/members') }}" method="post">
         @csrf
         <div>

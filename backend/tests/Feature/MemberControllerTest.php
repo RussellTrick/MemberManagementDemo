@@ -2,6 +2,7 @@
 
 use Tests\TestCase;
 use App\Models\Member;
+use App\Models\School;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class MemberControllerTest extends TestCase
@@ -24,13 +25,15 @@ class MemberControllerTest extends TestCase
         $response->assertStatus(200);
     }
 
-    /** @test */
+/** @test */
     public function it_can_store_a_new_member()
     {
+        $school = School::factory()->create();
+
         $data = [
             'name' => 'John Doe',
             'email' => 'john@example.com',
-            'school_id' => 1, // Assuming a school with ID 1 exists in your database
+            'school_id' => $school->id,
         ];
 
         $response = $this->post('/members', $data);
@@ -38,6 +41,8 @@ class MemberControllerTest extends TestCase
         $response->assertRedirect('/members');
         $this->assertDatabaseHas('members', $data);
     }
+
+    
 
     /** @test */
     public function it_can_show_a_member_details()
@@ -59,15 +64,16 @@ class MemberControllerTest extends TestCase
         $response->assertStatus(200);
     }
 
-    /** @test */
+/** @test */
     public function it_can_update_a_member()
     {
         $member = Member::factory()->create();
+        $school = School::factory()->create();
 
         $data = [
             'name' => 'Updated Name',
             'email' => 'updated@example.com',
-            'school_id' => 1, // Assuming a school with ID 1 exists in your database
+            'school_id' => $school->id,
         ];
 
         $response = $this->put("/members/{$member->id}", $data);
@@ -75,6 +81,8 @@ class MemberControllerTest extends TestCase
         $response->assertRedirect('/members');
         $this->assertDatabaseHas('members', $data);
     }
+
+    
 
     /** @test */
     public function it_can_delete_a_member()
