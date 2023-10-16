@@ -9,7 +9,7 @@ class Member extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'email'];
+    protected $fillable = ['name', 'email', 'school_id'];
 
     // Define the relationship with School
     public function school()
