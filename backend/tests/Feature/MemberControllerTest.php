@@ -136,4 +136,25 @@ class MemberControllerTest extends TestCase
         $response->assertSessionHasErrors('email');
     }
 
+    /** @test */
+    public function it_can_update_a_member_with_same_information()
+    {
+        $existingMember = Member::factory()->create();
+
+        $response = $this->put("/members/{$existingMember->id}", [
+            'name' => $existingMember->name,
+            'email' => $existingMember->email,
+            'school_id' => $existingMember->school_id,
+        ]);
+
+        $response->assertRedirect('/members');
+        $this->assertDatabaseHas('members', [
+            'id' => $existingMember->id,
+            'name' => $existingMember->name,
+            'email' => $existingMember->email,
+            'school_id' => $existingMember->school_id,
+        ]);
+    }
+
+
 }

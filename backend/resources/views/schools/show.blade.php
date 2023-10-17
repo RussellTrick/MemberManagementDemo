@@ -17,6 +17,11 @@
                 <h4 class="card-title">Total Members: {{ $school->members->count() }}</h4>
                 <p class="card-text">ID: {{ $school->id }}</p>
                 <a href="{{ route('schools.edit', $school->id) }}" class="btn btn-primary">Edit</a>
+                <form action="{{ url('/schools/' . $school->id) }}" method="post" class="d-inline">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
             </div>
         </div>
 

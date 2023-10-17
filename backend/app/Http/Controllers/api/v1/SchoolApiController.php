@@ -7,6 +7,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Validation\Rule;
+
 
 class SchoolApiController extends Controller
 {
@@ -49,7 +51,7 @@ class SchoolApiController extends Controller
      */
     public function update(Request $request, School $school)
     {
-        $validator = $this->validator($request->all());
+        $validator = $this->validator($request->all(), $school);
 
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 422);
@@ -73,10 +75,18 @@ class SchoolApiController extends Controller
     /**
      * Validate the request data.
      */
-    protected function validator(array $data)
+    protected function validator(array $data, $school = null)
     {
-        return Validator::make($data, [
+        $rules = [
             'name' => ['required', 'string', 'max:255'],
-        ]);
+        ];
+
+        if ($school) {
+            $rules['name'][] = Rule::unique('schools')->ignore($school->id);
+        } else {
+            $rules['name'][] = 'unique:schools';
+        }
+
+        return Validator::make($data, $rules);
     }
 }
