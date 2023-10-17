@@ -94,4 +94,46 @@ class MemberControllerTest extends TestCase
         $response->assertRedirect('/members');
         $this->assertDatabaseMissing('members', ['id' => $member->id]);
     }
+
+    /** @test */
+    public function testCreateMemberValidation()
+    {
+        $response = $this->post('/members', [
+            'name' => '',
+            'email' => 'invalid-email',
+            'school_id' => 999, 
+        ]);
+
+        $response->assertStatus(302);
+        $response->assertSessionHasErrors(['name', 'email', 'school_id']);
+    }
+
+    /** @test */
+    public function testEditMemberValidation()
+    {
+        $member = Member::factory()->create();
+        $response = $this->put("/members/$member->id", [
+            'name' => '',
+            'email' => 'invalid-email',
+            'school_id' => 999, 
+        ]);
+
+        $response->assertStatus(302);
+        $response->assertSessionHasErrors(['name', 'email', 'school_id']);
+    }
+
+    /** @test */
+    public function it_cannot_create_a_member_with_non_unique_email()
+    {
+        $existingMember = Member::factory()->create();
+
+        $response = $this->post('/members', [
+            'name' => 'John Doe',
+            'email' => $existingMember->email,
+            'school_id' => $existingMember->school_id,
+        ]);
+
+        $response->assertSessionHasErrors('email');
+    }
+
 }

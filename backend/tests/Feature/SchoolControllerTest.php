@@ -45,4 +45,37 @@ class SchoolControllerTest extends TestCase
         $response->assertRedirect('/schools');
         $this->assertDatabaseMissing('schools', ['id' => $school->id]);
     }
+
+    /** @test */
+    public function it_cannot_create_a_school_without_name()
+    {
+        $response = $this->post('/schools', []);
+
+        $response->assertSessionHasErrors('name');
+    }
+
+    /** @test */
+    public function it_cannot_update_a_school_without_name()
+    {
+        $school = School::factory()->create();
+
+        $response = $this->put("/schools/{$school->id}", [
+            'name' => '',
+        ]);
+
+        $response->assertSessionHasErrors('name');
+    }
+
+    /** @test */
+    public function it_cannot_create_a_school_with_non_unique_name()
+    {
+        $existingSchool = School::factory()->create();
+
+        $response = $this->post('/schools', [
+            'name' => $existingSchool->name,
+        ]);
+
+        $response->assertSessionHasErrors('name');
+    }
+
 }

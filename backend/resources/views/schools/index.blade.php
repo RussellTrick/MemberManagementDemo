@@ -4,6 +4,14 @@
     <div class="container mt-5">
         <h1>Schools</h1>
 
+        @if($errors->any())
+            @foreach($errors->all() as $error)
+                <div class="alert alert-danger" role="alert">
+                    {{ $error }}
+                </div>
+            @endforeach
+        @endif
+
         <div class="row">
             <div class="col-md-12">
                 <a href="{{ route('schools.create') }}" class="btn btn-primary mb-3">Add New School</a>

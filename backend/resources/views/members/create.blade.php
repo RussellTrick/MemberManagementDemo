@@ -2,9 +2,17 @@
 
 @section('content')
     <div class="container mt-5">
+
         <h1 class="mb-4">Create Member</h1>
 
-        <a href="{{ url('/members') }}" class="btn btn-secondary mb-3">Back</a>
+        @if($errors->any())
+            @foreach($errors->all() as $error)
+                <div class="alert alert-danger" role="alert">
+                    {{ $error }}
+                </div>
+            @endforeach
+        @endif
+
 
         <form action="{{ url('/members') }}" method="post">
             @csrf
