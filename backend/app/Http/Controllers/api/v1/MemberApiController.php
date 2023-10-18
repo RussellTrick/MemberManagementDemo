@@ -18,7 +18,7 @@ class MemberApiController extends Controller
     {
         $members = Member::all();
     
-        return response()->json(['members' => $members]);
+        return response()->json($members);
     }
 
     /**
