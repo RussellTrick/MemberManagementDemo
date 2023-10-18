@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 
-String? baseUrl = dotenv.env['API_BASE_URL'];
+String? baseUrl = "${dotenv.env['API_BASE_URL']}/api/v1";
 
 class BaseClient {
   var client = http.Client();

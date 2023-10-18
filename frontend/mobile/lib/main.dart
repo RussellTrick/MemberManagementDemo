@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:mvc_php_demo/widgets/school_table_widget.dart';
+import 'package:mvc_php_demo/services/schoolservice.dart';
 
 void main() async {
   await dotenv.load();
@@ -7,6 +9,8 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
+  final SchoolService _schoolService = SchoolService();
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -27,70 +31,7 @@ class MyApp extends StatelessWidget {
                 ),
               ),
               Expanded(
-                child: DataTable(
-                  columns: [
-                    DataColumn(label: Text('ID')),
-                    DataColumn(label: Text('Name')),
-                    DataColumn(label: Text('Actions')),
-                  ],
-                  rows: [
-                    DataRow(
-                      cells: [
-                        DataCell(Text('1')),
-                        DataCell(Text('Item 1')),
-                        DataCell(Row(
-                          children: [
-                            ElevatedButton(
-                              onPressed: () {
-                                // Handle View button
-                              },
-                              style: ButtonStyle(
-                                backgroundColor:
-                                    MaterialStateProperty.all<Color>(
-                                        Color.fromRGBO(141, 200, 14, 1)),
-                              ),
-                              child: Text(
-                                'View',
-                                style: TextStyle(color: Colors.black),
-                              ),
-                            ),
-                            SizedBox(width: 8.0),
-                            ElevatedButton(
-                              onPressed: () {
-                                // Handle Edit button
-                              },
-                              style: ButtonStyle(
-                                backgroundColor:
-                                    MaterialStateProperty.all<Color>(
-                                        Color.fromRGBO(240, 168, 17, 1)),
-                              ),
-                              child: Text(
-                                'Edit',
-                                style: TextStyle(color: Colors.black),
-                              ),
-                            ),
-                            SizedBox(width: 8.0),
-                            ElevatedButton(
-                              onPressed: () {
-                                // Handle Delete button
-                              },
-                              style: ButtonStyle(
-                                backgroundColor:
-                                    MaterialStateProperty.all<Color>(
-                                        Color.fromRGBO(231, 3, 1, 1)),
-                              ),
-                              child: Text(
-                                'Delete',
-                                style: TextStyle(color: Colors.black),
-                              ),
-                            ),
-                          ],
-                        )),
-                      ],
-                    ),
-                    // Add more DataRow entries as needed
-                  ],
-                ),
+                child: SchoolTableWidget(_schoolService.getAllSchools()),
               ),
             ],
           ),
