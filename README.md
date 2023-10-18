@@ -6,6 +6,7 @@
 3. [Prerequisites](#prerequisites)
 4. [Installation](#installation)
 5. [Database Setup](#database-setup)
+6. [Running laravel](#How-to-run)
 
 ## Introduction
 This is a php MVC School management demo where a user can view a school and it returns a full list of the schools members. A user can also delete edit and create schools/members.
@@ -49,8 +50,6 @@ This project also includes a Flutter frontend, which is currently in development
 
 If you want to test the Flutter frontend, follow the instructions in the `frontend_flutter/README.md` file for setup and usage.  
 
-Please note that the Flutter frontend is a separate project and may have its own set of dependencies and requirements. Make sure to check the `frontend_flutter/README.md` for specific instructions.  
-
 
 Frontend>Mobile>.env  
 ```
@@ -72,3 +71,9 @@ php artisan migrate --seed
 ```
 
 This will create the tables in your MySQL database and seed them with some dummy data.
+
+## How to Run
+In order to run the laravel run the following in a terminal /backend
+```
+php artisan serve
+```
