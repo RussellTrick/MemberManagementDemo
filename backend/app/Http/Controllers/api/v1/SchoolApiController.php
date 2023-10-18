@@ -89,4 +89,10 @@ class SchoolApiController extends Controller
 
         return Validator::make($data, $rules);
     }
+
+    public function getMembersBySchool($schoolId)
+    {
+        $members = Member::where('school_id', $schoolId)->get();
+        return response()->json($members);
+    }
 }

@@ -19,4 +19,5 @@ use App\Http\Controllers\api\v1\SchoolApiController;
 Route::prefix('v1')->group(function () {
     Route::apiResource('members', MemberApiController::class);
     Route::apiResource('schools', SchoolApiController::class);
+    Route::get('/schools/{schoolId}/members', 'SchoolController@getMembersBySchool');
 });
