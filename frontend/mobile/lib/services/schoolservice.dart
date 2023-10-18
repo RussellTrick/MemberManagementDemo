@@ -29,7 +29,8 @@ class SchoolService {
   }
 
   Future<dynamic> deleteSchool(int id) async {
-    return client.delete('/schools/$id');
+    final response = await client.delete('/schools/$id');
+    return response;
   }
 
   Future<List<Member>> getMembersBySchool(int schoolId) async {

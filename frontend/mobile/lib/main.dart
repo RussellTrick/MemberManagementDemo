@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:mvc_php_demo/widgets/school_table_widget.dart';
-import 'package:mvc_php_demo/services/schoolservice.dart';
 
 void main() async {
   await dotenv.load();
@@ -9,8 +8,6 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
-  final SchoolService _schoolService = SchoolService();
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -30,9 +27,7 @@ class MyApp extends StatelessWidget {
                   style: TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold),
                 ),
               ),
-              Expanded(
-                child: SchoolTableWidget(_schoolService.getAllSchools()),
-              ),
+              Expanded(child: SchoolTableWidget()),
             ],
           ),
         ),
