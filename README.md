@@ -6,15 +6,13 @@
 3. [Prerequisites](#prerequisites)
 4. [Installation](#installation)
 5. [Database Setup](#database-setup)
-6. [Running laravel](#How-to-run)
+6. [Usage](#usage)
 
 ## Introduction
 This is a php MVC School management demo where a user can view a school and it returns a full list of the schools members. A user can also delete edit and create schools/members.
-
-#TODO: Finish
+There is also unit tests and api functionallity. 
 
 ## Features
-List the key features of the application, such as:
 - Adding new members with fields (Name, Email Address, School)
 - Displaying members for a selected school
 
@@ -66,11 +64,10 @@ composer install
 ```
 
 ## Database Setup
+This will create the tables in your MySQL database and seed them with some dummy data.
 ```bash
 php artisan migrate --seed
 ```
-
-This will create the tables in your MySQL database and seed them with some dummy data.
 
 ## Usage
 In order to run the laravel run the following in a terminal /backend
