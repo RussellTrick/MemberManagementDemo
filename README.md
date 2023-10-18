@@ -72,8 +72,13 @@ php artisan migrate --seed
 
 This will create the tables in your MySQL database and seed them with some dummy data.
 
-## How to Run
+## Usage
 In order to run the laravel run the following in a terminal /backend
 ```
 php artisan serve
+```
+
+To perform the unit tests run the following in a terminal /backend
+```
+php artisan test
 ```
