@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mvc_php_demo/models/school.dart';
+import 'package:mvc_php_demo/screens/schoolview.dart';
 
 class SchoolTableWidget extends StatelessWidget {
   final Future<List<School>> schools;
@@ -18,14 +19,14 @@ class SchoolTableWidget extends StatelessWidget {
         } else {
           List<School> schoolsData = snapshot.data!;
           return schoolsData.isNotEmpty
-              ? buildDataTable(schoolsData)
+              ? buildDataTable(schoolsData, context)
               : buildNoDataMessage();
         }
       },
     );
   }
 
-  Widget buildDataTable(List<School> schoolsData) {
+  Widget buildDataTable(List<School> schoolsData, context) {
     return DataTable(
       columns: [
         DataColumn(label: Text('Name')),
@@ -39,15 +40,50 @@ class SchoolTableWidget extends StatelessWidget {
               children: [
                 ElevatedButton(
                   onPressed: () {
-                    // Handle View button
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => SchoolView(school: school),
+                      ),
+                    );
                   },
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all<Color>(
-                      Color.fromRGBO(141, 200, 14, 1),
+                      Colors.green,
                     ),
                   ),
                   child: Text(
                     'View',
+                    style: TextStyle(color: Colors.black),
+                  ),
+                ),
+                SizedBox(width: 8.0),
+                ElevatedButton(
+                  onPressed: () {
+                    // Handle View button
+                  },
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all<Color>(
+                      Colors.yellow,
+                    ),
+                  ),
+                  child: Text(
+                    'Edit',
+                    style: TextStyle(color: Colors.black),
+                  ),
+                ),
+                SizedBox(width: 8.0),
+                ElevatedButton(
+                  onPressed: () {
+                    // Handle View button
+                  },
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all<Color>(
+                      Colors.red,
+                    ),
+                  ),
+                  child: Text(
+                    'Delete',
                     style: TextStyle(color: Colors.black),
                   ),
                 ),
