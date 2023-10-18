@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'base_client.dart';
 import 'package:mvc_php_demo/models/school.dart';
+import 'package:mvc_php_demo/models/member.dart';
 
 class SchoolService {
   final BaseClient client = BaseClient();
@@ -29,5 +30,13 @@ class SchoolService {
 
   Future<dynamic> deleteSchool(int id) async {
     return client.delete('/schools/$id');
+  }
+
+  Future<List<Member>> getMembersBySchool(int schoolId) async {
+    final response = await client.get('/schools/$schoolId/members');
+
+    List<dynamic> data = json.decode(response);
+    List<Member> members = data.map((item) => Member.fromJson(item)).toList();
+    return members;
   }
 }
