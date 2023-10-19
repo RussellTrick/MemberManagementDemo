@@ -3,10 +3,10 @@ import 'package:mvc_php_demo/models/school.dart';
 import 'package:mvc_php_demo/screens/schoolview.dart';
 import 'package:mvc_php_demo/screens/schooledit.dart';
 import 'package:mvc_php_demo/services/schoolservice.dart';
-import 'package:mvc_php_demo/models/member.dart';
 
 class SchoolTableWidget extends StatefulWidget {
   @override
+  // ignore: library_private_types_in_public_api
   _SchoolTableWidgetState createState() => _SchoolTableWidgetState();
 }
 
@@ -17,16 +17,27 @@ class _SchoolTableWidgetState extends State<SchoolTableWidget> {
     return await _schoolService.getAllSchools();
   }
 
-  Future<List<Member>> _getMembersBySchool(int schoolId) async {
-    return await _schoolService.getMembersBySchool(schoolId);
-  }
-
   Future<void> _deleteSchool(int id) async {
     await _schoolService.deleteSchool(id);
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('School deleted successfully')),
-    );
+    if (context.mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('School deleted successfully')),
+      );
+    }
     setState(() {});
+  }
+
+  Future<void> _navigateToEdit(int schoolId) async {
+    final result = await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => SchoolEdit(schoolId: schoolId),
+      ),
+    );
+
+    if (result == true) {
+      setState(() {});
+    }
   }
 
   Widget buildDataTable(List<School> schoolsData, context) {
@@ -63,12 +74,7 @@ class _SchoolTableWidgetState extends State<SchoolTableWidget> {
                 SizedBox(width: 8.0),
                 ElevatedButton(
                   onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => SchoolEdit(school: school),
-                      ),
-                    );
+                    _navigateToEdit(school.id);
                   },
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all<Color>(

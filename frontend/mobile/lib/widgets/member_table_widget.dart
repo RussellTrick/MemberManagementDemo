@@ -30,7 +30,6 @@ class MemberTableWidget extends StatelessWidget {
       columns: [
         DataColumn(label: Text('Name')),
         DataColumn(label: Text('Email')),
-        DataColumn(label: Text('School')),
         DataColumn(label: Text('Actions')),
       ],
       rows: membersData.map<DataRow>((member) {
@@ -38,7 +37,6 @@ class MemberTableWidget extends StatelessWidget {
           cells: [
             DataCell(Text(member.name)),
             DataCell(Text(member.email)),
-            DataCell(Text(member.schoolId.toString())),
             DataCell(Row(
               children: [
                 ElevatedButton(

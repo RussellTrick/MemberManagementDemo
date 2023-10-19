@@ -16,8 +16,10 @@ class SchoolService {
     return schools;
   }
 
-  Future<dynamic> getSchoolById(int id) async {
-    return client.get('/schools/$id');
+  Future<School> getSchoolById(int id) async {
+    final response = await client.get('/schools/$id');
+
+    return School.fromJson(json.decode(response));
   }
 
   Future<dynamic> createSchool(Map<String, dynamic> data) async {

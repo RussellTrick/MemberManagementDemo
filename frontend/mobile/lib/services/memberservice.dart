@@ -32,6 +32,7 @@ class MemberService {
   }
 
   Future<dynamic> deleteMember(int id) async {
-    return client.delete('/members/$id');
+    final response = await client.delete('/members/$id');
+    return response;
   }
 }
