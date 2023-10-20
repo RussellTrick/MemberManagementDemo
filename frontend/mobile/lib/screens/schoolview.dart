@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:mvc_php_demo/models/school.dart';
 import 'package:mvc_php_demo/widgets/member_table_widget.dart';
-import 'package:mvc_php_demo/services/schoolservice.dart';
 
 class SchoolView extends StatelessWidget {
   final School school;
-  final SchoolService _schoolService = SchoolService();
 
   SchoolView({required this.school});
 
@@ -27,8 +25,7 @@ class SchoolView extends StatelessWidget {
               ),
             ),
             Expanded(
-              child: MemberTableWidget(
-                  _schoolService.getMembersBySchool(school.id)),
+              child: MemberTableWidget(school.id),
             ),
           ],
         ),

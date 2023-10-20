@@ -118,7 +118,7 @@ class _SchoolTableWidgetState extends State<SchoolTableWidget> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<List<School>>(
-      future: _fetchSchools(), // Fetch schools here
+      future: _fetchSchools(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Center(child: CircularProgressIndicator());

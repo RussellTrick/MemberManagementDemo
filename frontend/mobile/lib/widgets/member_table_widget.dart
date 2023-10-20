@@ -1,15 +1,54 @@
 import 'package:flutter/material.dart';
 import 'package:mvc_php_demo/models/member.dart';
+import 'package:mvc_php_demo/screens/memberview.dart';
+import 'package:mvc_php_demo/services/memberservice.dart';
+import 'package:mvc_php_demo/services/schoolservice.dart';
 
-class MemberTableWidget extends StatelessWidget {
-  final Future<List<Member>> members;
+class MemberTableWidget extends StatefulWidget {
+  final int schoolId;
 
-  MemberTableWidget(this.members);
+  MemberTableWidget(this.schoolId);
+
+  @override
+  // ignore: library_private_types_in_public_api
+  _MemberTableWidgetState createState() => _MemberTableWidgetState();
+}
+
+class _MemberTableWidgetState extends State<MemberTableWidget> {
+  final MemberService _memberService = MemberService();
+  final SchoolService _schoolService = SchoolService();
+
+  Future<List<Member>> _fetchMembers() async {
+    return await _schoolService.getMembersBySchool(widget.schoolId);
+  }
+
+  Future<void> _deleteMember(int id) async {
+    await _memberService.deleteMember(id);
+    if (context.mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('School deleted successfully')),
+      );
+    }
+    setState(() {});
+  }
+
+  Future<void> _navigateToMemberView(Member member) async {
+    final result = await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => MemberView(member: member),
+      ),
+    );
+
+    if (result == true) {
+      setState(() {});
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<List<Member>>(
-      future: members,
+      future: _fetchMembers(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Center(child: CircularProgressIndicator());
@@ -41,7 +80,7 @@ class MemberTableWidget extends StatelessWidget {
               children: [
                 ElevatedButton(
                   onPressed: () {
-                    // Handle View button
+                    _navigateToMemberView(member);
                   },
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all<Color>(
@@ -71,7 +110,7 @@ class MemberTableWidget extends StatelessWidget {
                 SizedBox(width: 8.0),
                 ElevatedButton(
                   onPressed: () {
-                    // Handle Delete button
+                    _deleteMember(member.id);
                   },
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all<Color>(

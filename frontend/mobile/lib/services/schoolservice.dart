@@ -18,7 +18,6 @@ class SchoolService {
 
   Future<School> getSchoolById(int id) async {
     final response = await client.get('/schools/$id');
-
     return School.fromJson(json.decode(response));
   }
 

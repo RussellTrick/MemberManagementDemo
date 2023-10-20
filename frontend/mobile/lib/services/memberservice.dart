@@ -19,8 +19,9 @@ class MemberService {
     return members;
   }
 
-  Future<dynamic> getMemberById(int id) async {
-    return client.get('/members/$id');
+  Future<Member> getMemberById(int id) async {
+    final response = await client.get('/members/$id');
+    return response;
   }
 
   Future<dynamic> createMember(Map<String, dynamic> data) async {

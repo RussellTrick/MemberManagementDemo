@@ -54,9 +54,7 @@ class _SchoolEditState extends State<SchoolEdit> {
           nameController.text = school.name;
 
           return Scaffold(
-            appBar: AppBar(
-              title: Text(school.name),
-            ),
+            appBar: AppBar(title: Text(school.name)),
             body: Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
