@@ -22,7 +22,7 @@ You need to create .env files in the root of the directories.
 
 For the Laravel php  
 
-Backend>.env  
+Backendz/.env  
 ```
 APP_NAME
 APP_ENV
